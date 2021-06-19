@@ -23,7 +23,7 @@ function createItemComponent(price, idx) {
         // if it's empty or we've reached the end of the inputs
         if ($(this).val() === '' || $(this).val() === 0 || next === 5) {
           // go to next person
-          submitAndNext()
+          submitAndNext(true)
         } else {
           // go to next input
           $('#items').find(`[data-idx=${next}]`).focus()
@@ -33,7 +33,7 @@ function createItemComponent(price, idx) {
 
   return component
 }
-function setPerson(idx) {
+function setPerson(idx, focus) {
   curr_person_idx = idx
   let name = names[curr_person_idx]
   $("#name").text(name)
@@ -44,14 +44,15 @@ function setPerson(idx) {
   bill[name].forEach((price, idx2, arr) => {
     let component = createItemComponent(price, idx2)
     items.append(component)
-
-    // focuses first empty input
-    if ((price === 0 && idx2 === 0) || (price === 0 && arr[idx2 - 1] !== 0)) {
-      component.find('input').get(0).focus({preventScroll: true})
+    if (focus) {
+      // focuses first empty input
+      if ((price === 0 && idx2 === 0) || (price === 0 && arr[idx2 - 1] !== 0)) {
+        component.find('input').get(0).focus({preventScroll: true})
+      }
     }
   })
   $("#name").css("color", "red")
-  $("#name").animate({color: "black"})
+  $("#name").animate({color: "black"}, 800)
 }
 
 function main() {
@@ -63,7 +64,7 @@ function main() {
         e.preventDefault(); 
         let next_person = $(this).data('person-idx')
         submitPerson()
-        setPerson(next_person)
+        setPerson(next_person, false)
         return false; 
       })
       .css('cursor', 'pointer');
@@ -85,7 +86,7 @@ function main() {
     dropdown2.append(component) 
   }) 
 
-  setPerson(curr_person_idx)
+  setPerson(curr_person_idx, false)
 }
 
 function submitPerson() {
@@ -96,7 +97,7 @@ function submitPerson() {
   $('#items').children().each(function() {
     let val = $(this).find('input').val()
 
-    if (val !== 0 && val !== "") {
+    if (val !== 0 && val !== "" && !isNaN(val)) {
       arr.push(parseFloat(parseFloat(val).toFixed(2)))
     }
   })
@@ -167,7 +168,7 @@ function hideTotals() {
   $("#main").show()
 }
 
-function submitAndNext() {
+function submitAndNext(focus) {
   submitPerson()
-  setPerson((curr_person_idx+1)%names.length)
+  setPerson((curr_person_idx+1)%names.length, focus)
 }
