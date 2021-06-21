@@ -51,7 +51,7 @@ function setPerson(idx, focus) {
       }
     }
   })
-  $("#name").css("color", "red")
+  $("#name").css("color", "#0d6efd")
   $("#name").animate({color: "black"}, 800)
 }
 
@@ -61,30 +61,16 @@ function main() {
     bill[name] = [0, 0, 0, 0, 0];
     let dropdown_item = $(`<a class="dropdown-item" data-person-idx="${idx}">${name}</a>`)
       .click(function(e) {
-        e.preventDefault(); 
         let next_person = $(this).data('person-idx')
         submitPerson()
         setPerson(next_person, false)
-        return false; 
+        return true; 
       })
       .css('cursor', 'pointer');
     let component = $(`<li></li>`).append(dropdown_item)
     dropdown.append(component)
   })
 
-  let dropdown2 = $('#dropdown2');
-  tips.forEach((tip) => {
-    let dropdown_item = $(`<a class="dropdown-item">${parseFloat(tip*100, 2)}% Tip</a>`)
-      .click(function(e) {
-        e.preventDefault(); 
-        tip_rate = tip;
-        calculateBill()
-        return false; 
-      })
-      .css('cursor', 'pointer');
-    let component = $(`<li></li>`).append(dropdown_item)
-    dropdown2.append(component) 
-  }) 
 
   setPerson(curr_person_idx, false)
 }
@@ -157,7 +143,6 @@ function showTotals(totals) {
     </tr> 
   `))
 
-  $("#tip").text(`Tip (${parseInt(tip_rate*100)}%)`)
   $("#main").hide()
   $("#totals").show()
 
@@ -171,4 +156,12 @@ function hideTotals() {
 function submitAndNext(focus) {
   submitPerson()
   setPerson((curr_person_idx+1)%names.length, focus)
+}
+
+function openEditModal(type) {
+  $(".displayed_type").text(type)
+  $(".displayed_rate").text(`${((type === 'Tip' ? tip_rate : tax_rate) * 100).toFixed(2)}%`)
+
+  var modal = new bootstrap.Modal(document.getElementById('editRateModal'))
+  modal.show()
 }
