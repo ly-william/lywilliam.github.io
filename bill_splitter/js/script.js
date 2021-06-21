@@ -125,9 +125,9 @@ function showTotals(totals) {
     table.append($(`
       <tr>
         <td class="align-middle text-center pl-5">${total.person}</td>
-        <td class="align-middle">$${total.subtotal.toFixed(2)}</td>
-        <td class="align-middle">$${total.tax.toFixed(2)}</td>
-        <td class="align-middle">$${total.tip.toFixed(2)}</td>
+        <td class="align-middle hide">$${total.subtotal.toFixed(2)}</td>
+        <td class="align-middle hide">$${total.tax.toFixed(2)}</td>
+        <td class="align-middle hide">$${total.tip.toFixed(2)}</td>
         <td class="align-middle bold">$${total.sum.toFixed(2)}</td>
       </tr> 
     `))
@@ -136,9 +136,9 @@ function showTotals(totals) {
   table.append($(`
     <tr>
       <th class="align-middle text-center pl-5">${col_total.person}</th>
-      <th class="align-middle">$${col_total.subtotal.toFixed(2)}</th>
-      <th class="align-middle">$${col_total.tax.toFixed(2)}</th>
-      <th class="align-middle">$${col_total.tip.toFixed(2)}</th>
+      <th class="align-middle hide">$${col_total.subtotal.toFixed(2)}</th>
+      <th class="align-middle hide">$${col_total.tax.toFixed(2)}</th>
+      <th class="align-middle hide">$${col_total.tip.toFixed(2)}</th>
       <th class="align-middle">$${col_total.sum.toFixed(2)}</th>
     </tr> 
   `))
@@ -151,11 +151,24 @@ function showTotals(totals) {
 function hideTotals() {
   $("#totals").hide()
   $("#main").show()
+  expand()
 }
 
 function submitAndNext(focus) {
   submitPerson()
   setPerson((curr_person_idx+1)%names.length, focus)
+}
+
+function onlyTotal() {
+  $(".hide").hide()
+  $("#onlyT").hide()
+  $("#expandTotals").show()
+}
+
+function expand(){
+  $(".hide").show()
+  $("#onlyT").show()
+  $("#expandTotals").hide()
 }
 
 function openEditModal(type) {
