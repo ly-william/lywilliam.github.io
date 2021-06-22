@@ -1,13 +1,30 @@
 let bill = {}
 let names = ['Cris', 'Ergi', 'Jason', 'Mike', 'Wellan', 'Will', 'Laurelle', 'Sally'];
-let tax_rate = 0.0625
-let tips = [0.15, 0.2, 0.25]
+let tax_rate = 0.08875
 let tip_rate = 0.20
 let curr_person_idx = 0
+let validNumber = new RegExp(/^\d*\.?\d*$/);
+let lastValid = $("#edit_rate_input").val();
+let modal = undefined;
+
+
 
 $(document).ready(function() {
   main()
+  modal = new bootstrap.Modal(document.getElementById('editRateModal'))
+  document.getElementById('editRateModal').addEventListener('hide.bs.modal', function (event) {
+    // do something...
+    $('#edit_rate_input').val('')
+  })
 });
+
+function validateNumber(elem) {
+  if (validNumber.test(elem.value)) {
+    lastValid = elem.value;
+  } else {
+    elem.value = lastValid;
+  }
+}
 
 function createItemComponent(price, idx) {
   let component = $(`
@@ -70,6 +87,16 @@ function main() {
     let component = $(`<li></li>`).append(dropdown_item)
     dropdown.append(component)
   })
+
+  $('#displayed_tax_rate').text(`(${(tax_rate*100)}%)`)
+  $('#displayed_tip_rate').text(`(${tip_rate*100}%)`)
+
+  $('#edit_rate_input').keypress(function(event) {
+    if (event.keyCode == 13 || event.which == 13) {
+        event.preventDefault();
+        submitRate()
+    }
+});
 
 
   setPerson(curr_person_idx, false)
@@ -173,8 +200,25 @@ function expand(){
 
 function openEditModal(type) {
   $(".displayed_type").text(type)
-  $(".displayed_rate").text(`${((type === 'Tip' ? tip_rate : tax_rate) * 100).toFixed(2)}%`)
+  $(".displayed_rate").text(`${((type === 'Tip' ? tip_rate : tax_rate) * 100)}%`)
+  $('#edit_rate_input').data('rate', type)
+  rate_editing = type
 
-  var modal = new bootstrap.Modal(document.getElementById('editRateModal'))
   modal.show()
 }
+
+function submitRate() {
+  let rate_input = $('#edit_rate_input')
+  if (rate_input.val() === '') return;
+  if (rate_input.data('rate') === 'Tax') {
+    tax_rate = parseFloat(rate_input.val()) / 100
+    $("#displayed_tax_rate").text(`(${rate_input.val()}%)`)
+  } else {
+    tip_rate = parseFloat(rate_input.val()) / 100
+    $("#displayed_tip_rate").text(`(${rate_input.val()}%)`)
+  }
+
+  modal.hide()
+  calculateBill()
+}
+
