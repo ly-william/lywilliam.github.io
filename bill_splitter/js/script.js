@@ -3,8 +3,6 @@ let names = ['Cris', 'Ergi', 'Jason', 'Mike', 'Wellan', 'Will', 'Laurelle', 'Sal
 let tax_rate = 0.08875
 let tip_rate = 0.20
 let curr_person_idx = 0
-let validNumber = new RegExp(/^\d*\.?\d*$/);
-let lastValid = $("#edit_rate_input").val();
 let modal = undefined;
 
 
@@ -15,16 +13,10 @@ $(document).ready(function() {
   document.getElementById('editRateModal').addEventListener('hide.bs.modal', function (event) {
     // do something...
     $('#edit_rate_input').val('')
+    $('#modal_error').hide()
   })
 });
 
-function validateNumber(elem) {
-  if (validNumber.test(elem.value)) {
-    lastValid = elem.value;
-  } else {
-    elem.value = lastValid;
-  }
-}
 
 function createItemComponent(price, idx) {
   let component = $(`
@@ -207,9 +199,17 @@ function openEditModal(type) {
   modal.show()
 }
 
+
 function submitRate() {
   let rate_input = $('#edit_rate_input')
-  if (rate_input.val() === '') return;
+  if (rate_input.val().length === 0) {
+    modalError(`Enter a number.`);
+    return;
+  }
+  if (isNaN(rate_input.val())) {
+    modalError(`<strong>${rate_input.val()}</strong> is not a number.`);
+    return;
+  }
   if (rate_input.data('rate') === 'Tax') {
     tax_rate = parseFloat(rate_input.val()) / 100
     $("#displayed_tax_rate").text(`(${rate_input.val()}%)`)
@@ -222,3 +222,7 @@ function submitRate() {
   calculateBill()
 }
 
+function modalError(err) {
+  $('#modal_error').html(err)
+  $('#modal_error').show()
+}

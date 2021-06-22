@@ -21,8 +21,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <div class="alert alert-danger" id="modal_error" style="display: none"></div>
         <p>Current <span class="displayed_type">Tax</span> Rate: <strong class="displayed_rate">6.25</strong></p>
-        <p>New <span class="displayed_type">Tax</span> Rate: <input id="edit_rate_input" data-rate="tax" class="ms-1" style="width: 60px"type="number" oninput="validateNumber(this);">%</p>
+        <p>New <span class="displayed_type">Tax</span> Rate: <input id="edit_rate_input" data-rate="tax" class="ms-1" style="width: 60px"inputmode="decimal">%</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
