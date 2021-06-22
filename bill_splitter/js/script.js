@@ -225,4 +225,5 @@ function submitRate() {
 function modalError(err) {
   $('#modal_error').html(err)
   $('#modal_error').show()
+  $('#edit_rate_input').val('')
 }
