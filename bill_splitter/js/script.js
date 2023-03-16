@@ -1,6 +1,7 @@
 let bill = {}
-let names = ['Cris', 'Ergi', 'Jason', 'Mike', 'Wellan', 'Will', 'Laurelle', 'Sally'];
-let tax_rate = 0.08875
+// let names = ['Cris', 'Ergi', 'Jason', 'Mike', 'Wellan', 'Will', 'Laurelle', 'Sally'];
+let names = ['Will', 'Joey', 'Eve', 'Bella', 'Kyle', 'AJ'];
+let tax_rate = 0.06
 let tip_rate = 0.20
 let curr_person_idx = 0
 let modal = undefined;
