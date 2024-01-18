@@ -24,6 +24,9 @@ function deleteName(ele) {
 
   // delete the parent node
   parent.remove()
+
+  // refocus the input so the user can continue entering
+  $("#nameInput").focus()
 }
 
 
