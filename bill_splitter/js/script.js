@@ -1,14 +1,77 @@
+// bill's structure is
+// {'name': int[5]}
 let bill = {}
-// let names = ['Cris', 'Ergi', 'Jason', 'Mike', 'Wellan', 'Will', 'Laurelle', 'Sally'];
-let names = ['Will', 'Joey', 'Eve', 'Bella', 'Kyle', 'AJ'];
+let names = [];
 let tax_rate = 0.06
 let tip_rate = 0.20
 let curr_person_idx = 0
 let modal = undefined;
+let x = `
+<svg onclick='deleteName(this)' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x align-middle" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg>
+`
+
+// is called when the 'x' is click to delete the name
+function deleteName(ele) {
+  // find the name associated
+  let parent = ele.parentElement
+  let associatedName = parent.dataset.name
+
+  // delete the name
+  let idx = names.indexOf(associatedName)
+  names.splice(idx, 1)
+
+  // delete the parent node
+  parent.remove()
+}
 
 
+// function that sets the name internally
+// as well as emptying the input field
+function setName() {
+  // get the name
+  let enteredName = $("#nameInput").val()
+
+  // if they are still entering names
+  if (enteredName !== '') {
+    // show the name to the user
+
+    // actually add the column
+    $(`#namesList`).append(`
+      <div class="col-6" data-name="${enteredName}">${enteredName}${x}</div>
+    `)
+
+    // add the name internally
+    names.push(enteredName)
+
+    // empty the input
+    $('#nameInput').val('')
+  } else {
+    // they aren't entering names anymore, so hide this screen
+    // and process the names
+    $("#firstContainer").hide()
+    processNames()
+  }
+  
+}
 
 $(document).ready(function() {
+  // add functionality to the name input when the enter key is pressed
+  $('#nameInput').on('keypress', (e) => {
+    if (e.which == 13) {
+      setName()
+    }
+  })
+});
+
+
+// this function is called by the beginning modal
+// once the user has entered the names of the people
+// that they are splitting the bill with
+function processNames() {
+  $("#calculationScreen").show()
+  // the original code is here
   main()
   modal = new bootstrap.Modal(document.getElementById('editRateModal'))
   document.getElementById('editRateModal').addEventListener('hide.bs.modal', function (event) {
@@ -16,8 +79,7 @@ $(document).ready(function() {
     $('#edit_rate_input').val('')
     $('#modal_error').hide()
   })
-});
-
+}
 
 function createItemComponent(price, idx) {
   let component = $(`
@@ -66,9 +128,18 @@ function setPerson(idx, focus) {
 }
 
 function main() {
+  // dropdown is the menu that contains
+  // peoples names. its purpose it to be
+  // able to quickly switch between 
+  // non-adjacent people
+  
   let dropdown = $('#dropdown')
   names.forEach((name, idx) => {
+    // instantiate an empty bill for this person
     bill[name] = [0, 0, 0, 0, 0];
+
+    // data-person-idx is used to relate the name of the person
+    // which you are clicking to the corresponding idx into the names array
     let dropdown_item = $(`<a class="dropdown-item" data-person-idx="${idx}">${name}</a>`)
       .click(function(e) {
         let next_person = $(this).data('person-idx')
@@ -89,8 +160,7 @@ function main() {
         event.preventDefault();
         submitRate()
     }
-});
-
+  });
 
   setPerson(curr_person_idx, false)
 }
