@@ -2,8 +2,10 @@
 // {'name': int[5]}
 let bill = {}
 let names = [];
-let tax_rate = 0.06
-let tip_rate = 0.20
+let tax_total = 0.06
+let tip_total = 0.20
+let default_tax = 0.06
+let default_tip = 0.20
 let curr_person_idx = 0
 let modal = undefined;
 let x = `
@@ -155,13 +157,10 @@ function main() {
     dropdown.append(component)
   })
 
-  $('#displayed_tax_rate').text(`(${(tax_rate*100)}%)`)
-  $('#displayed_tip_rate').text(`(${tip_rate*100}%)`)
-
-  $('#edit_rate_input').keypress(function(event) {
+  $('#edit_total_input').keypress(function(event) {
     if (event.keyCode == 13 || event.which == 13) {
         event.preventDefault();
-        submitRate()
+        submitTotal()
     }
   });
 
@@ -186,15 +185,46 @@ function submitPerson() {
   }
 }
 
+function roundTwoDecimals(num) {
+  return Math.round(num * 100) / 100
+}
+
+let firstCalculate = true;
 function calculateBill() {
   submitPerson()
+  // subtotal is used regardless
+  // if this is firstCalculate
+  let subtotal = 0;
+  for (let key in bill)
+    subtotal += bill[key].reduce((acc, e) => acc + e)
+
+  // if this is first calculate, use the default tax + tip rate
+  // to determine tip total
+  if (firstCalculate) {
+    tax_rate = default_tax
+    tip_rate = default_tip
+    // also save the total amount
+    tax_total = roundTwoDecimals(subtotal * tax_rate)
+    tip_total = roundTwoDecimals(subtotal * tip_rate)
+    firstCalculate = false
+  } else {
+    // else, you need to take the entered total
+    // and divide by the subtotal
+    tax_rate = tax_total / subtotal
+    tip_rate = tip_total / subtotal
+  }
+
+  // also set the tax rate
+  $('#displayed_tax_rate').text(`(${roundTwoDecimals(tax_rate*100)}%)`)
+  $('#displayed_tip_rate').text(`(${roundTwoDecimals(tip_rate*100)}%)`)
+
   let totals = [] 
   for (let key in bill) {
-    let subtotal = bill[key].reduce((acc, e) => acc + e, 0);
-    if (subtotal === 0) continue;
-    let tax = subtotal * tax_rate
-    let tip = subtotal * tip_rate
-    totals.push({"person": key, "subtotal": subtotal, "tax": tax, "tip": tip, "sum": subtotal + tax + tip}) 
+    let individual_subtotal = bill[key].reduce((acc, e) => acc + e, 0);
+    if (individual_subtotal=== 0) continue;
+    let tax = individual_subtotal* tax_rate
+    let tip = individual_subtotal * tip_rate
+    totals.push({"person": key, "subtotal": individual_subtotal, "tax": tax, "tip": tip, "sum": individual_subtotal + tax + tip}) 
   }
   showTotals(totals)
 }
@@ -230,8 +260,10 @@ function showTotals(totals) {
     <tr>
       <th class="align-middle text-center pl-5">${col_total.person}</th>
       <th class="align-middle hide">$${col_total.subtotal.toFixed(2)}</th>
-      <th class="align-middle hide">$${col_total.tax.toFixed(2)}</th>
-      <th class="align-middle hide">$${col_total.tip.toFixed(2)}</th>
+      <th class="align-middle hide">$${col_total.tax.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tax')">
+      </th>
+      <th class="align-middle hide">$${col_total.tip.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tip')">
+      </th>
       <th class="align-middle">$${col_total.sum.toFixed(2)}</th>
     </tr> 
   `))
@@ -266,31 +298,32 @@ function expand(){
 
 function openEditModal(type) {
   $(".displayed_type").text(type)
-  $(".displayed_rate").text(`${((type === 'Tip' ? tip_rate : tax_rate) * 100)}%`)
-  $('#edit_rate_input').data('rate', type)
-  rate_editing = type
+  $(".displayed_total").text(`${type === 'Tip' ? tip_total : tax_total}`)
+  $('#edit_total_input').data('total', type)
 
   modal.show()
 }
 
 
-function submitRate() {
-  let rate_input = $('#edit_rate_input')
-  if (rate_input.val().length === 0) {
+function submitTotal() {
+  let total_input = $('#edit_total_input')
+  if (total_input.val().length === 0) {
     modalError(`Enter a number.`);
     return;
   }
-  if (isNaN(rate_input.val())) {
-    modalError(`<strong>${rate_input.val()}</strong> is not a number.`);
+  if (isNaN(total_input.val())) {
+    modalError(`<strong>${total_input.val()}</strong> is not a number.`);
     return;
   }
-  if (rate_input.data('rate') === 'Tax') {
-    tax_rate = parseFloat(rate_input.val()) / 100
-    $("#displayed_tax_rate").text(`(${rate_input.val()}%)`)
+
+  // determine if they selected tax or tip
+  if (total_input.data('total') === 'Tax') {
+    tax_total = parseFloat(total_input.val())
   } else {
-    tip_rate = parseFloat(rate_input.val()) / 100
-    $("#displayed_tip_rate").text(`(${rate_input.val()}%)`)
+    tip_total = parseFloat(total_input.val())
   }
+
+  total_input.val('')
 
   modal.hide()
   calculateBill()

@@ -17,17 +17,17 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Change <span class="displayed_type">Tax</span> Rate</h5>
+        <h5 class="modal-title">Change <span class="displayed_type">Tax</span> Total</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="alert alert-danger" id="modal_error" style="display: none"></div>
-        <p>Current <span class="displayed_type">Tax</span> Rate: <strong class="displayed_rate">6.25</strong></p>
-        <p>New <span class="displayed_type">Tax</span> Rate: <input id="edit_rate_input" data-rate="tax" class="ms-1" style="width: 60px"inputmode="decimal">%</p>
+        <p>Current <span class="displayed_type">Tax</span> Total: <strong>$</strong><strong class="displayed_total">6.25</strong></p>
+        <p>New <span class="displayed_type">Tax</span> Total: $<input id="edit_total_input" data-total="tax" class="ms-1" style="width: 60px" inputmode="decimal"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="submitRate()">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="submitTotal()">Submit</button>
       </div>
     </div>
   </div>
@@ -101,19 +101,15 @@
                 <td class="hide" style="width:20%">
                   <div>
                     Tax
-                    <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tax')">
                   </div>
                   <div id="displayed_tax_rate" class="text-muted small-font">
-                    (6.25%)
                   </div>
                 </td>
                 <td class="hide" style="width:20%">
                   <div>
                     Tip
-                    <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tip')">
                   </div>
                   <div id="displayed_tip_rate" class="text-muted small-font">
-                    (20%)
                   </div>
                 </td>
                 <th style="width:20%">Totals</th>
