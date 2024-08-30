@@ -260,9 +260,9 @@ function showTotals(totals) {
     <tr>
       <th class="align-middle text-center pl-5">${col_total.person}</th>
       <th class="align-middle hide">$${col_total.subtotal.toFixed(2)}</th>
-      <th class="align-middle hide">$${col_total.tax.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tax')">
+      <th class="align-middle hide">$${col_total.tax.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 10px" onclick="openEditModal('Tax')">
       </th>
-      <th class="align-middle hide">$${col_total.tip.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 15px" onclick="openEditModal('Tip')">
+      <th class="align-middle hide">$${col_total.tip.toFixed(2)} <img class="mb-1" src="img/pencil.png" style="width: 10px" onclick="openEditModal('Tip')">
       </th>
       <th class="align-middle">$${col_total.sum.toFixed(2)}</th>
     </tr> 
