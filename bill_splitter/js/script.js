@@ -86,10 +86,33 @@ function processNames() {
   })
 }
 
+function handleItemSplit(price, component) {
+  // find the split price
+  let split_price = roundTwoDecimals(price / names.length)
+
+  // update the price for this input
+  component.find('input').val(split_price)
+
+  // append the price to everyone else
+  names.forEach((name) => {
+    let already_updated = names[curr_person_idx]
+    if (name !== already_updated) {
+      let firstZero = bill[name].indexOf(0)
+      if (firstZero !== -1) {
+        bill[name][firstZero] = split_price
+      } else {
+        // adds another row for this person
+        bill[name].push(split_price)
+      }
+    }
+  })
+}
+
 function createItemComponent(price, idx) {
   let component = $(`
     <tr>
       <th class="align-middle text-center pl-5">${idx+1}</th>
+      <td class="align-middle"><button id=btn-${idx} class="btn btn-success" style="display: none">Split</button></td>
       <td class="align-middle">$<input class="custom_input" data-idx="${idx}" type="number" placeholder="00.00" value=${price === 0 ? '' : price}></td>
     </tr>
   `)
@@ -108,8 +131,32 @@ function createItemComponent(price, idx) {
       }
   })
 
+  // handle the showing / unshowing of buttons
+  // depending on which is selected
+  let input = component.find('input')
+  let button = component.find('button')
+  input.on('focus', function(e) {
+    // show the button
+    button.css('display', 'block')
+  })
+
+  input.on('focusout', function(e) {
+    // if they're clicking on the corresponding button, let that happen first
+    if (e['relatedTarget']?.id === `btn-${idx}`)
+      return
+    // else, hide the button
+    button.css('display', 'none')
+  })
+
+  component.find('button')[0].addEventListener("click", function(e) {
+    handleItemSplit(input.val(), component)
+    // hide the button
+    e['srcElement'].style.display = 'none'
+  })
   return component
 }
+
+
 function setPerson(idx, focus) {
   curr_person_idx = idx
   let name = names[curr_person_idx]
@@ -124,7 +171,8 @@ function setPerson(idx, focus) {
     if (focus) {
       // focuses first empty input
       if ((price === 0 && idx2 === 0) || (price === 0 && arr[idx2 - 1] !== 0)) {
-        component.find('input').get(0).focus({preventScroll: true})
+        let c = component.find('input').get(0)
+        c.focus({preventScroll: true})
       }
     }
   })
