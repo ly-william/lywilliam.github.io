@@ -108,6 +108,8 @@ function handleItemSplit(price, component) {
   })
 }
 
+let clickedSplit = false;
+
 function createItemComponent(price, idx) {
   let component = $(`
     <tr>
@@ -140,12 +142,23 @@ function createItemComponent(price, idx) {
     button.css('display', 'block')
   })
 
-  input.on('focusout', function(e) {
+  input.on('focusout', function() {
     // if they're clicking on the corresponding button, let that happen first
-    if (e['relatedTarget']?.id === `btn-${idx}`)
-      return
-    // else, hide the button
-    button.css('display', 'none')
+    if (clickedSplit) {
+      // they clicked the split, so reset this value
+      clickedSplit = false
+    } else {
+      // else, hide the button
+      button.css('display', 'none')
+    }
+  })
+
+  // this is how we work around the button disappearing
+  // before being able to press it
+  // mousedown triggers before the focus out,
+  // so we can track if this was clicked
+  component.find('button')[0].addEventListener("mousedown", function(e) {
+    clickedSplit = true
   })
 
   component.find('button')[0].addEventListener("click", function(e) {
