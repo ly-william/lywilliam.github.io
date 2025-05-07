@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="1090852746409-dg3iiqskigd5b11ek2cdfegbi9de4prb.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../static/website/css/main.css">
+    <link rel="icon" href="../../static/website/images/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WD87SPQC0S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WD87SPQC0S');
+    </script> 
+    <title> Computer Networks (Lecture) </title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-umass fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="../../index.html">Classmate Finder at UMass</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="../../index.html">Home</a>
+                  
+                  <a class="nav-item nav-link" target="_blank" href="https://chrome.google.com/webstore/detail/class-number-exporter/mphpcmkacfbacbkiompmenmfhpemgmjk">Browser Extension</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="../../accounts/settings/index.html">Settings</a>
+                    <a class="nav-item nav-link" style="cursor:pointer;" onclick="signOut();">Sign out</a>
+                    <script>
+                      function signOut() {
+                        window.location.href = "../../index.html"
+                      }
+
+                      function onLoad() {
+                        gapi.load('auth2', function() {
+                          gapi.auth2.init();
+                        });
+                      }
+                    </script>
+                </div>
+              </div>
+          
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      
+      <div class="row">
+        <div class="col-md-12">
+              <div id="alert" class='alert' hidden>
+
+              </div>
+          
+<script>
+var main_page = "/"
+var full_name = "William Ly"
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+<script src="../../static/website/js/cookie-backend.js"></script>
+<script src="../../static/website/js/course.js"></script>
+<link rel="stylesheet" type="text/css" href="../../static/website/css/course.css">
+<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove <strong>Computer Networks (Lecture)</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" onclick="submit_remove()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="groupchatModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Set Groupchat Link</h5>
+      </div>
+      <div class="modal-body">
+        
+        <div id="groupchat_modal_message" class="alert alert-warning" role="alert" hidden></div>
+        <p style="margin: 0;" class="mb-1">Social Media:</p>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="social_media" id="social_media_snapchat" value="snapchat" checked onclick="setPlaceholder(0)">
+          <label class="form-check-label" for="social_media_snapchat">
+            Snapchat
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="social_media" id="social_media_discord" value="discord" onclick="setPlaceholder(1)">
+          <label class="form-check-label" for="social_media_discord">
+            Discord
+          </label>
+        </div>
+        <hr>
+          <div class="form-group mt-2">
+              <label for="groupchat_link">Link:</label>
+              <input id="groupchat_link" type="text" class="form-control" placeholder="https://www.snapchat.com/t/..." value="https://www.snapchat.com/t/testinvite"> 
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submit_set_groupchat()" id="set_groupchat_button">Confirm</button>
+        <div id="set_groupchat_spinner" class="spinner-border text-primary mx-4" hidden role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="gc_history_modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Groupchat Link History</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info wrap" id="gc_history_alert" hidden></div>
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-snapchat-tab" data-toggle="tab" href="#nav-snapchat" role="tab" aria-controls="nav-snapchat" aria-selected="true">Snapchat</a>
+              <a class="nav-item nav-link" id="nav-discord-tab" data-toggle="tab" href="#nav-discord" role="tab" aria-controls="nav-discord" aria-selected="false">Discord</a>
+          </div>
+       </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-snapchat" role="tabpanel" aria-labelledby="nav-snapchat-tab">
+            <table id="groupchat_history_snapchat" class="table table-hover"  hidden >
+              <thead class="bg-umass" style="color: white">
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Link</th>
+                 </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table> 
+          
+            <div id="groupchat_history_empty_snapchat" class="alert alert-secondary mt-4">
+              A groupchat link has not been set yet.
+            </div>
+               
+          </div>
+          <div class="tab-pane fade" id="nav-discord" role="tabpanel" aria-labelledby="nav-discord-tab">
+              
+              <div id="groupchat_history_empty_discord" class="alert alert-secondary mt-4">
+                A groupchat link has not been set yet.
+              </div>
+            
+            <table id="groupchat_history_discord" class="table table-hover"  hidden >
+              <thead class="bg-umass" style="color: white">
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Link</th>
+                 </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm text-center">
+    <h1>
+      Computer Networks (Lecture)
+    </h1>
+    <h5 class="mb-4 text-muted">
+      COMPSCI 453
+    </h5>
+    <h5 class="text-muted">
+        <span class="ml-2">
+            <a class="no-underline" href="index.html" target="_blank"  hidden >
+              <img id="snapchat_picture" title="Join Snapchat Groupchat" alt="Snapchat" src="../../static/website/images/snapchat.png" class="groupchat-snapchat">
+            </a> 
+            
+              <img id="snapchat_picture_monochrome" title="Set Snapchat Groupchat" alt="Snapchat Monochrome" src="../../static/website/images/snapchat_monochrome.png" class="groupchat-snapchat" onclick="openModal('snapchat')">
+            
+            <a class="no-underline" href="index.html" target="_blank"  hidden >
+              <img id="discord_picture" title="Join Discord Server" alt="Discord" src="../../static/website/images/discord.png" class="groupchat-discord pt-1">
+            </a> 
+            
+              <img id="discord_picture_monochrome" title="Set Discord Server" alt="Discord Monochrome" src="../../static/website/images/discord_monochrome.png" class="groupchat-discord pt-1" onclick="openModal('discord')">
+            
+        </span>
+      </h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <table id='mainTable' class="table table-hover table-responsive-lg">
+        <thead class="bg-umass" style="color: white">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/instagram.ico"> Instagram</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/snapchat.png"> Snapchat</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/twitter.ico"> Twitter</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/discord.png"> Discord</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            <tr >
+                <th scope="row">1</th>
+                <td>Vickie Owens</td>
+                <td> <a href="https://instagram.com/vickie528/" target="_blank">vickie528</a> </td>
+                <td> <a href="https://snapchat.com/add/owens48/" target="_blank">owens48</a> </td>
+                <td> <a href="https://twitter.com/vickieowens/" target="_blank">vickieowens</a> </td>
+                <td>vickie776</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">2</th>
+                <td>Robin Salazar</td>
+                <td> <a href="https://instagram.com/robin.salazar/" target="_blank">robin.salazar</a> </td>
+                <td> <a href="https://snapchat.com/add/rsalazar/" target="_blank">rsalazar</a> </td>
+                <td> <a href="https://twitter.com/robin_salazar/" target="_blank">robin_salazar</a> </td>
+                <td>robin.salazar</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">3</th>
+                <td>Jacob Rogers</td>
+                <td> <a href="https://instagram.com/jrogers/" target="_blank">jrogers</a> </td>
+                <td> <a href="https://snapchat.com/add/jrogers/" target="_blank">jrogers</a> </td>
+                <td> <a href="https://twitter.com/jacob754/" target="_blank">jacob754</a> </td>
+                <td>jacob.rogers</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">4</th>
+                <td>Alyssa Alvarez</td>
+                <td> <a href="https://instagram.com/alyssaalvarez/" target="_blank">alyssaalvarez</a> </td>
+                <td> <a href="https://snapchat.com/add/alvarez53/" target="_blank">alvarez53</a> </td>
+                <td> <a href="https://twitter.com/aalvarez/" target="_blank">aalvarez</a> </td>
+                <td>aalvarez</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">5</th>
+                <td>Melinda Adams</td>
+                <td> <a href="https://instagram.com/madams/" target="_blank">madams</a> </td>
+                <td> <a href="https://snapchat.com/add/melinda.adams/" target="_blank">melinda.adams</a> </td>
+                <td> <a href="https://twitter.com/melinda157/" target="_blank">melinda157</a> </td>
+                <td>melinda.adams</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">6</th>
+                <td>Sara Nguyen</td>
+                <td> <a href="https://instagram.com/saranguyen/" target="_blank">saranguyen</a> </td>
+                <td> <a href="https://snapchat.com/add/sara.nguyen/" target="_blank">sara.nguyen</a> </td>
+                <td> <a href="https://twitter.com/snguyen/" target="_blank">snguyen</a> </td>
+                <td>sara525</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">7</th>
+                <td>Jacob White</td>
+                <td> <a href="https://instagram.com/jacob425/" target="_blank">jacob425</a> </td>
+                <td> <a href="https://snapchat.com/add/jacobwhite/" target="_blank">jacobwhite</a> </td>
+                <td> <a href="https://twitter.com/jacob_white/" target="_blank">jacob_white</a> </td>
+                <td>white28</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">8</th>
+                <td>Sarah Hughes</td>
+                <td> <a href="https://instagram.com/sarahhughes/" target="_blank">sarahhughes</a> </td>
+                <td> <a href="https://snapchat.com/add/sarah625/" target="_blank">sarah625</a> </td>
+                <td> <a href="https://twitter.com/sarahhughes/" target="_blank">sarahhughes</a> </td>
+                <td>sarah274</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">9</th>
+                <td>Daniel Hill</td>
+                <td> <a href="https://instagram.com/dhill/" target="_blank">dhill</a> </td>
+                <td> <a href="https://snapchat.com/add/danielhill/" target="_blank">danielhill</a> </td>
+                <td> <a href="https://twitter.com/dhill/" target="_blank">dhill</a> </td>
+                <td>daniel.hill</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">10</th>
+                <td>Gina Gonzalez</td>
+                <td> <a href="https://instagram.com/ginagonzalez/" target="_blank">ginagonzalez</a> </td>
+                <td> <a href="https://snapchat.com/add/gina.gonzalez/" target="_blank">gina.gonzalez</a> </td>
+                <td> <a href="https://twitter.com/gonzalez84/" target="_blank">gonzalez84</a> </td>
+                <td>gina.gonzalez</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">11</th>
+                <td>Johnny Fitzgerald</td>
+                <td> <a href="https://instagram.com/johnny822/" target="_blank">johnny822</a> </td>
+                <td> <a href="https://snapchat.com/add/johnny.fitzgerald/" target="_blank">johnny.fitzgerald</a> </td>
+                <td> <a href="https://twitter.com/jfitzgerald/" target="_blank">jfitzgerald</a> </td>
+                <td>fitzgerald21</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">12</th>
+                <td>Chad Gonzalez</td>
+                <td> <a href="https://instagram.com/chad.gonzalez/" target="_blank">chad.gonzalez</a> </td>
+                <td> <a href="https://snapchat.com/add/chadgonzalez/" target="_blank">chadgonzalez</a> </td>
+                <td> <a href="https://twitter.com/chad.gonzalez/" target="_blank">chad.gonzalez</a> </td>
+                <td>gonzalez92</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">13</th>
+                <td>Tamara Kennedy</td>
+                <td> <a href="https://instagram.com/tkennedy/" target="_blank">tkennedy</a> </td>
+                <td> <a href="https://snapchat.com/add/tamara.kennedy/" target="_blank">tamara.kennedy</a> </td>
+                <td> <a href="https://twitter.com/tkennedy/" target="_blank">tkennedy</a> </td>
+                <td>tamara_kennedy</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">14</th>
+                <td>William Ly</td>
+                <td> <a href="https://instagram.com/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td> <a href="https://snapchat.com/add/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td> <a href="https://twitter.com/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td>lywilliam</td>
+            </tr>
+        
+        </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm text-center">
+      <button class="btn btn-info custom-btn" data-toggle="modal" data-target="#groupchatModal">
+        Set Groupchat Link
+      </button>
+      <button class="btn btn-dark custom-btn" data-toggle="modal" data-target="#gc_history_modal">
+        View Groupchat Link History
+      </button> 
+      <button class="btn btn-danger custom-btn" data-toggle="modal" data-target="#removeModal">
+        Remove class
+      </button>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </main>
+    
+      <footer class="footer">
+        <div class="container text-center">
+            <hr style="height:1px;border:none;color:#D3D3D3;background-color:#D3D3D3;">
+            <h5>Supports Spring 2024</h5>
+            <p>Created by William Ly '24</p>
+            <p class="contact"><a href="../../contact/index.html">Contact Me</a> | <a href="../../privacy_policy/index.html">Privacy Policy</a></p>
+            <p><i><strong>Note</strong>: Not affiliated with UMass Amherst</i></p>
+          </div>
+        </div> 
+
+      </footer>
+    
+  </body>
+</html>

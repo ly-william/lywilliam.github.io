@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="1090852746409-dg3iiqskigd5b11ek2cdfegbi9de4prb.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/website/css/main.css">
+    <link rel="icon" href="static/website/images/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WD87SPQC0S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WD87SPQC0S');
+    </script> 
+    <title> Classes </title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-umass fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="index.html">Classmate Finder at UMass</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="index.html">Home</a>
+                  
+                  <a class="nav-item nav-link" target="_blank" href="https://chrome.google.com/webstore/detail/class-number-exporter/mphpcmkacfbacbkiompmenmfhpemgmjk">Browser Extension</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="accounts/settings/index.html">Settings</a>
+                    <a class="nav-item nav-link" style="cursor:pointer;" onclick="signOut();">Sign out</a>
+                    <script>
+                      function signOut() {
+                        window.location.href = "./index.html"
+                      }
+
+                      function onLoad() {
+                        gapi.load('auth2', function() {
+                          gapi.auth2.init();
+                        });
+                      }
+                    </script>
+                </div>
+              </div>
+          
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      
+      <div class="row">
+        <div class="col-md-12">
+              <div id="alert" class='alert' hidden>
+
+              </div>
+          
+
+<script src="static/website/js/cookie-backend.js"></script>
+<script>
+    function modalMsg(message, messageType) {
+        var msg = $("#modal_msg")
+        msg.removeClass(['alert-warning', 'alert-success'])
+        msg.addClass('alert-'+messageType);
+        msg.html(message)
+        msg.removeAttr("hidden")
+    }
+
+    const exampleData = (classNumber) => {
+        return new Promise((resolve, reject) => {
+            // Simulate async operation (e.g. API call)
+            let added_class = getCookie('added_class') !== null
+            setTimeout(() => {
+            const data = {
+                success: classNumber === '12345' && !added_class,
+                course: {
+                    "pk": 12345, 
+                    "fields":  {
+                        "term": 1247,
+                        "subject": "COMPSCI", 
+                        "catalog_number": "311", 
+                        "description": "Introduction to Algorithms", 
+                        "component": "Lecture", 
+                        "snapchat_link": "", 
+                        "discord_link": "", 
+                        "num_students": 16
+                    }
+                },
+                error: added_class && classNumber === '12345' ? 'already_registered' : 'class_not_found',
+                name: 'Introduction to Algorithms'
+            };
+
+            setCookie('added_class', true)
+            resolve(data); // Resolve with the dictionary (object)
+            }, 500);
+        });
+    };
+
+    function submit() {
+        var class_number_input = document.getElementById("class_number")
+        $("#modal_msg").attr('hidden', '')
+        // check if  input fields are empty
+        if (class_number_input.value.trim() === '') {
+            modalMsg('Please enter a Class Number.', 'warning')
+            return
+        }
+
+        // make sure that class number is between 10000 and 99999
+        if (class_number_input.value < 10000 || class_number_input.value > 99999) {
+            modalMsg('Please enter a valid Class Number (5-digit number).', 'warning')
+            return;
+        }
+
+        // show spinner + hide button
+        $("#submit_button").attr('hidden', '')
+        $("#spinner").removeAttr('hidden')
+        $("#class_number").attr('disabled', '')
+
+        // fetch(window.location.href, {
+        //     method:'POST',
+        //     headers:{
+        //         'Content-Type':'application/json',
+        //         'X-CSRFToken':csrftoken,
+        //     }, 
+        //     body:JSON.stringify({'class_number': class_number_input.value}),
+        // })
+        // .then((response) => response.json())
+        exampleData(class_number_input.value)
+        .then((data) => {
+            if (data["success"] == true) {
+                var json = data["course"]
+                var pk = json["pk"]
+                var info = json["fields"]
+                // if length is 0 that means element was not found
+                var row = $("#term_" + info["term"])
+                if (!row.length) {
+                    // creates new header
+                    var termName = ""
+                    switch (info["term"] % 10) {
+                        case 1:
+                            termName = "Winter"
+                            break
+                        case 3:
+                            termName = "Spring"
+                            break
+                        case 5:
+                            termName = "Summer"
+                            break
+                        case 7:
+                            termName = "Fall"
+                            break
+                    }
+                    termName += " 20" + Math.floor((info["term"] % 1000) / 10)
+                    var newRow = $("<div><div><h1></h1></div></div>")
+                        .addClass("row")
+                        .attr("id", "term_" + info["term"])
+                        .children("div")
+                            .addClass("col-md-12")
+                            .find("h1")
+                                .addClass("ml-1")
+                                .html(termName)
+                            .end()
+                        .end()
+                    newRow.appendTo("#terms")
+                }
+                row = $("#term_" + info["term"])
+                var elem = $("<div><div><div><h5></h5><h6></h6><p></p><a></a></div></div></div>")
+                    .addClass("col-md-4")
+                    .attr("data-class-name", info["subject"] + " " + info["catalog_number"] + " (" + info["component"] + ")")
+                    .children("div")
+                        .addClass(["card", "mb-4", "custom-card"])
+                        .css('width', '20rem')
+                        .children("div")
+                            .addClass("card-body")
+                            .find("h5")
+                                .addClass(["card-title", "trimText"])
+                                .html(info['description'])
+                            .end()
+                            .find("h6")
+                                .addClass(["card-subtitle", "mb-2", "text-muted"])
+                                .html(info["component"])
+                            .end()
+                            .find("p")
+                                .addClass("card-text")
+                                .html("No New Classmates")
+                            .end()
+                            .find("a")
+                                .addClass("card-link")
+                                .attr("href", "cm_finder/classes/" + pk + "/")
+                                .html("View " + info["num_students"] + " Classmate" + (info["num_students"] == 1 ? "" : "s"))
+                            .end()
+                        .end()
+                    .end()
+                elem.appendTo(row)
+
+                // reorder terms
+                $("#terms").children().sort(function(a, b) {
+                    return a.id > b.id ? -1 : (a.id < b.id ? 1 : 0)
+                }).appendTo("#terms")
+
+                // deletes & duplicates add_class button (must be done before alphabetizing)
+                var add_class = $("#add_class")
+                var dupe = add_class.clone()
+                dupe.removeClass()
+                dupe.addClass("col-sm-4")
+                add_class.remove()
+
+                // reorder classes for each term alphabetically
+                $("#terms").children().each((index) => {
+                        var _this = $("#terms").children()[index]
+                        $(_this).children().sort((a, b) => {
+                            return $(a).data("class-name") < $(b).data("class-name") ? -1 : ($(a).data("class-name") > $(b).data("class-name") ? 1 : 0)
+                        }).appendTo(_this)
+                    }
+                )
+
+                // adds add_class button to whatever is last row
+                var lastRow = $("#terms").children().last()
+                lastRow.append(dupe)
+
+                if ($("#no_classes").length) {
+                    $("#no_classes").remove()
+                }
+                
+                modalMsg("Successfully added <strong>" + info["description"] + " (" + info["component"] + ")</strong>.", 'success')
+                if ($("#django_alert").length) {
+                    $("#django_alert").remove()
+                }
+            } else if (data["error"] == "invalid_class_number"){
+                modalMsg('Please enter a valid Class Number (5-digit number).', 'warning')
+            } else if (data["error"] == "already_registered") {
+                modalMsg('You\'ve already added <strong>' + data["name"] +'</strong>.', 'warning')
+            }  else if (data["error"] == "class_not_found") {
+                modalMsg('A class with this Class Number during the supported terms was not found. Please try again.', 'warning')
+            }
+            $("#submit_button").removeAttr('hidden')
+            $("#spinner").attr('hidden', '')
+            $("#class_number").removeAttr('disabled').val("")
+        })
+    }
+</script>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add a class</h5>
+      </div>
+            <div class="modal-body">
+                <div id="modal_msg" class="alert alert-warning" role="alert" hidden></div>
+                <p>Class Number<sup>[<a href="class_number/index.html">?</a>]</sup>: 
+                <input id="class_number" size="6" style="text-align: center" value="12345">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a class='mr-auto' href="https://spire.umass.edu" target="_blank">Open SPIRE</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button id="submit_button" type="button" class="btn btn-primary" onclick="submit()">Submit</button>
+                <div id="spinner" class="spinner-border text-primary mx-4" hidden role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+    </div>
+  </div>
+</div>
+    <div id="terms">
+        <div class="row" id="term_1247">
+            <div class="col-md-12">
+                <h1 class="ml-1">Fall 2024</h1>
+            </div>
+            <div class="col-md-4" data-class-name="COMPSCI 311 (Lecture)">
+                <div class="card mb-4 custom-card" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title trimText">Introduction to Algorithms</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Lecture</h6>
+                        <p class="card-text">No New Classmates</p><a class="card-link" href="./classes/12345/">View 16
+                            Classmates</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <div id="term_1243" class="row">
+                <div class="col-md-12">
+                    <h1 class="ml-1">
+                        
+                            Spring
+                        
+                        2024
+                    </h1>
+                </div>
+                
+                    <div class="col-md-4" data-class-name="1 COMPSCI 383 (Lecture)">
+                        <div id="29839" class="card mb-4 custom-card" style="width: 20rem; ">
+                            <div class="card-body">
+                                <h5 class="card-title trimText">
+                                    
+                                    Artificial Intelligence
+                                    
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Lecture
+                                </h6>
+                                <p class="card-text ">
+                                    No New Classmates
+                                </p>
+                                <a href="classes/29839/index.html" class="card-link">View 21 Classmates</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-4" data-class-name="1 COMPSCI 589 (Lecture)">
+                        <div id="59430" class="card mb-4 custom-card" style="width: 20rem; ">
+                            <div class="card-body">
+                                <h5 class="card-title trimText">
+                                    
+                                    Machine Learning
+                                    
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Lecture
+                                </h6>
+                                <p class="card-text ">
+                                    No New Classmates
+                                </p>
+                                <a href="classes/59430/index.html" class="card-link">View 16 Classmates</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+            </div>
+        
+            <div id="term_1241" class="row">
+                <div class="col-md-12">
+                    <h1 class="ml-1">
+                        
+                            Winter
+                        
+                        2024
+                    </h1>
+                </div>
+                
+                    <div class="col-md-4" data-class-name="1 COMPSCI 453 (Lecture)">
+                        <div class="card mb-4 custom-card" style="width: 20rem; ">
+                            <div class="card-body">
+                                <h5 class="card-title trimText">
+                                    
+                                    Computer Networks
+                                    
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Lecture
+                                </h6>
+                                <p class="card-text ">
+                                    No New Classmates
+                                </p>
+                                <a href="classes/48392/index.html" class="card-link">View 14 Classmates</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-4" data-class-name="1 COMPSCI 390R (Discussion)">
+                        <div class="card mb-4 custom-card" style="width: 20rem; ">
+                            <div class="card-body">
+                                <h5 class="card-title trimText">
+                                    
+                                    Vulnerability Analysis
+                                    
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Discussion
+                                </h6>
+                                <p class="card-text ">
+                                    No New Classmates
+                                </p>
+                                <a href="classes/15341/index.html" class="card-link">View 26 Classmates</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+            </div>
+        
+            <div id="term_1237" class="row">
+                <div class="col-md-12">
+                    <h1 class="ml-1">
+                        
+                            Fall
+                        
+                        2023
+                    </h1>
+                </div>
+                
+                    <div class="col-md-4" data-class-name="1 COMPSCI 370 (Discussion)">
+                        <div class="card mb-4 custom-card" style="width: 20rem; ">
+                            <div class="card-body">
+                                <h5 class="card-title trimText">
+                                    
+                                    Computer Vision
+                                    
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    Discussion
+                                </h6>
+                                <p class="card-text ">
+                                    No New Classmates
+                                </p>
+                                <a href="classes/24678/index.html" class="card-link">View 28 Classmates</a>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                    <div id="add_class" class="col-sm-4">
+                        <div class="d-flex" style="width: 20rem; height: 10.55rem; background-color: white">
+                            <button class="btn btn-outline-primary btn-block custom-card" data-toggle="modal" data-target="#exampleModalCenter">
+                                + Add a class
+                            </button>
+                        </div>
+                    </div>
+                
+            </div>
+        
+    </div>
+            
+        <script>
+            $(document).ready(function() {
+                var class_number_input = document.getElementById("class_number")
+                $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+                    // resets to default
+                    if (!class_number_input.hasAttribute("disabled"))
+                        class_number_input.value = ''
+                    $("#modal_msg").attr('hidden', '')
+                })
+                // Execute a function when the user releases a key on the keyboard
+                class_number_input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById("submit_button").click();
+                }
+                });
+            });
+        </script>
+
+        </div>
+      </div>
+    </main>
+    
+      <footer class="footer">
+        <div class="container text-center">
+            <hr style="height:1px;border:none;color:#D3D3D3;background-color:#D3D3D3;">
+            <h5>Supports Spring 2024</h5>
+            <p>Created by William Ly '24</p>
+            <p class="contact"><a href="contact/index.html">Contact Me</a> | <a href="privacy_policy/index.html">Privacy Policy</a></p>
+            <p><i><strong>Note</strong>: Not affiliated with UMass Amherst</i></p>
+          </div>
+        </div> 
+
+      </footer>
+    
+  </body>
+</html>

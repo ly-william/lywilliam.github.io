@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="1090852746409-dg3iiqskigd5b11ek2cdfegbi9de4prb.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../static/website/css/main.css">
+    <link rel="icon" href="../../static/website/images/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WD87SPQC0S"></script>
+    <script src="../../static/website/js/cookie-backend.js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WD87SPQC0S');
+    </script> 
+    <title> Vulnerability Analysis (Discussion) </title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-umass fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="../../index.html">Classmate Finder at UMass</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="../../../index.html">Home</a>
+                  
+                  <a class="nav-item nav-link" target="_blank" href="https://chrome.google.com/webstore/detail/class-number-exporter/mphpcmkacfbacbkiompmenmfhpemgmjk">Browser Extension</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="../../accounts/settings/index.html">Settings</a>
+                    <a class="nav-item nav-link" style="cursor:pointer;" onclick="signOut();">Sign out</a>
+                    <script>
+                      function signOut() {
+                        window.location.href = "../../index.html"
+                      }
+
+                      function onLoad() {
+                        gapi.load('auth2', function() {
+                          gapi.auth2.init();
+                        });
+                      }
+                    </script>
+                </div>
+              </div>
+          
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      
+      <div class="row">
+        <div class="col-md-12">
+              <div id="alert" class='alert' hidden>
+
+              </div>
+          
+<script>
+var main_page = "/"
+var full_name = "William Ly"
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+<script src="../../static/website/js/cookie-backend.js"></script>
+<script src="../../static/website/js/course.js"></script>
+<link rel="stylesheet" type="text/css" href="../../static/website/css/course.css">
+<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove <strong>Vulnerability Analysis (Discussion)</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" onclick="submit_remove()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="groupchatModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Set Groupchat Link</h5>
+      </div>
+      <div class="modal-body">
+        
+        <div id="groupchat_modal_message" class="alert alert-warning" role="alert" hidden></div>
+        <p style="margin: 0;" class="mb-1">Social Media:</p>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="social_media" id="social_media_snapchat" value="snapchat" checked onclick="setPlaceholder(0)">
+          <label class="form-check-label" for="social_media_snapchat">
+            Snapchat
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="social_media" id="social_media_discord" value="discord" onclick="setPlaceholder(1)">
+          <label class="form-check-label" for="social_media_discord">
+            Discord
+          </label>
+        </div>
+        <hr>
+          <div class="form-group mt-2">
+              <label for="groupchat_link">Link:</label>
+              <input id="groupchat_link" type="text" class="form-control" placeholder="https://www.snapchat.com/t/..." value="https://www.snapchat.com/t/testinvite"> 
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submit_set_groupchat()" id="set_groupchat_button">Confirm</button>
+        <div id="set_groupchat_spinner" class="spinner-border text-primary mx-4" hidden role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="gc_history_modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Groupchat Link History</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info wrap" id="gc_history_alert" hidden></div>
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-snapchat-tab" data-toggle="tab" href="#nav-snapchat" role="tab" aria-controls="nav-snapchat" aria-selected="true">Snapchat</a>
+              <a class="nav-item nav-link" id="nav-discord-tab" data-toggle="tab" href="#nav-discord" role="tab" aria-controls="nav-discord" aria-selected="false">Discord</a>
+          </div>
+       </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-snapchat" role="tabpanel" aria-labelledby="nav-snapchat-tab">
+            <table id="groupchat_history_snapchat" class="table table-hover"  hidden >
+              <thead class="bg-umass" style="color: white">
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Link</th>
+                 </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table> 
+          
+            <div id="groupchat_history_empty_snapchat" class="alert alert-secondary mt-4">
+              A groupchat link has not been set yet.
+            </div>
+               
+          </div>
+          <div class="tab-pane fade" id="nav-discord" role="tabpanel" aria-labelledby="nav-discord-tab">
+              
+              <div id="groupchat_history_empty_discord" class="alert alert-secondary mt-4">
+                A groupchat link has not been set yet.
+              </div>
+            
+            <table id="groupchat_history_discord" class="table table-hover"  hidden >
+              <thead class="bg-umass" style="color: white">
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Link</th>
+                 </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm text-center">
+    <h1>
+      Vulnerability Analysis (Discussion)
+    </h1>
+    <h5 class="mb-4 text-muted">
+      COMPSCI 390R
+    </h5>
+    <h5 class="text-muted">
+        <span class="ml-2">
+            <a class="no-underline" href="index.html" target="_blank"  hidden >
+              <img id="snapchat_picture" title="Join Snapchat Groupchat" alt="Snapchat" src="../../static/website/images/snapchat.png" class="groupchat-snapchat">
+            </a> 
+            
+              <img id="snapchat_picture_monochrome" title="Set Snapchat Groupchat" alt="Snapchat Monochrome" src="../../static/website/images/snapchat_monochrome.png" class="groupchat-snapchat" onclick="openModal('snapchat')">
+            
+            <a class="no-underline" href="index.html" target="_blank"  hidden >
+              <img id="discord_picture" title="Join Discord Server" alt="Discord" src="../../static/website/images/discord.png" class="groupchat-discord pt-1">
+            </a> 
+            
+              <img id="discord_picture_monochrome" title="Set Discord Server" alt="Discord Monochrome" src="../../static/website/images/discord_monochrome.png" class="groupchat-discord pt-1" onclick="openModal('discord')">
+            
+        </span>
+      </h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <table id='mainTable' class="table table-hover table-responsive-lg">
+        <thead class="bg-umass" style="color: white">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/instagram.ico"> Instagram</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/snapchat.png"> Snapchat</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/twitter.ico"> Twitter</th>
+              <th scope="col"><img class="pb-1" src="../../static/website/images/discord.png"> Discord</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            <tr >
+                <th scope="row">1</th>
+                <td>Molly Wilson</td>
+                <td> <a href="https://instagram.com/mollywilson/" target="_blank">mollywilson</a> </td>
+                <td> <a href="https://snapchat.com/add/molly393/" target="_blank">molly393</a> </td>
+                <td> <a href="https://twitter.com/molly132/" target="_blank">molly132</a> </td>
+                <td>molly276</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">2</th>
+                <td>Christina Holmes</td>
+                <td> <a href="https://instagram.com/cholmes/" target="_blank">cholmes</a> </td>
+                <td> <a href="https://snapchat.com/add/christina380/" target="_blank">christina380</a> </td>
+                <td> <a href="https://twitter.com/holmes34/" target="_blank">holmes34</a> </td>
+                <td>cholmes</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">3</th>
+                <td>Scott Robinson</td>
+                <td> <a href="https://instagram.com/srobinson/" target="_blank">srobinson</a> </td>
+                <td> <a href="https://snapchat.com/add/robinson59/" target="_blank">robinson59</a> </td>
+                <td> <a href="https://twitter.com/scottrobinson/" target="_blank">scottrobinson</a> </td>
+                <td>scott.robinson</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">4</th>
+                <td>Sarah King</td>
+                <td> <a href="https://instagram.com/sking/" target="_blank">sking</a> </td>
+                <td> <a href="https://snapchat.com/add/sarahking/" target="_blank">sarahking</a> </td>
+                <td> <a href="https://twitter.com/sarah.king/" target="_blank">sarah.king</a> </td>
+                <td>sarahking</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">5</th>
+                <td>Jonathan Hoover</td>
+                <td> <a href="https://instagram.com/jonathanhoover/" target="_blank">jonathanhoover</a> </td>
+                <td> <a href="https://snapchat.com/add/jonathan_hoover/" target="_blank">jonathan_hoover</a> </td>
+                <td> <a href="https://twitter.com/jonathan950/" target="_blank">jonathan950</a> </td>
+                <td>hoover33</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">6</th>
+                <td>Robert Simpson</td>
+                <td> <a href="https://instagram.com/robert.simpson/" target="_blank">robert.simpson</a> </td>
+                <td> <a href="https://snapchat.com/add/simpson48/" target="_blank">simpson48</a> </td>
+                <td> <a href="https://twitter.com/robert876/" target="_blank">robert876</a> </td>
+                <td>robert.simpson</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">7</th>
+                <td>Bethany Sanchez</td>
+                <td> <a href="https://instagram.com/bethany_sanchez/" target="_blank">bethany_sanchez</a> </td>
+                <td> <a href="https://snapchat.com/add/bethany_sanchez/" target="_blank">bethany_sanchez</a> </td>
+                <td> <a href="https://twitter.com/bethanysanchez/" target="_blank">bethanysanchez</a> </td>
+                <td>bethany_sanchez</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">8</th>
+                <td>Randy Johnson</td>
+                <td> <a href="https://instagram.com/randy_johnson/" target="_blank">randy_johnson</a> </td>
+                <td> <a href="https://snapchat.com/add/randy786/" target="_blank">randy786</a> </td>
+                <td> <a href="https://twitter.com/johnson62/" target="_blank">johnson62</a> </td>
+                <td>randy_johnson</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">9</th>
+                <td>Mitchell Shaw</td>
+                <td> <a href="https://instagram.com/shaw33/" target="_blank">shaw33</a> </td>
+                <td> <a href="https://snapchat.com/add/mitchellshaw/" target="_blank">mitchellshaw</a> </td>
+                <td> <a href="https://twitter.com/mitchell.shaw/" target="_blank">mitchell.shaw</a> </td>
+                <td>mitchellshaw</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">10</th>
+                <td>Ryan Ward</td>
+                <td> <a href="https://instagram.com/ryan.ward/" target="_blank">ryan.ward</a> </td>
+                <td> <a href="https://snapchat.com/add/ryanward/" target="_blank">ryanward</a> </td>
+                <td> <a href="https://twitter.com/ward27/" target="_blank">ward27</a> </td>
+                <td>ryan.ward</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">11</th>
+                <td>Sarah Miller</td>
+                <td> <a href="https://instagram.com/sarah_miller/" target="_blank">sarah_miller</a> </td>
+                <td> <a href="https://snapchat.com/add/sarah_miller/" target="_blank">sarah_miller</a> </td>
+                <td> <a href="https://twitter.com/sarah341/" target="_blank">sarah341</a> </td>
+                <td>smiller</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">12</th>
+                <td>Patricia Evans</td>
+                <td> <a href="https://instagram.com/patricia873/" target="_blank">patricia873</a> </td>
+                <td> <a href="https://snapchat.com/add/patricia953/" target="_blank">patricia953</a> </td>
+                <td> <a href="https://twitter.com/patricia.evans/" target="_blank">patricia.evans</a> </td>
+                <td>patricia.evans</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">13</th>
+                <td>Gregory Erickson</td>
+                <td> <a href="https://instagram.com/gerickson/" target="_blank">gerickson</a> </td>
+                <td> <a href="https://snapchat.com/add/gregoryerickson/" target="_blank">gregoryerickson</a> </td>
+                <td> <a href="https://twitter.com/gregory757/" target="_blank">gregory757</a> </td>
+                <td>erickson79</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">14</th>
+                <td>Anthony Mann</td>
+                <td> <a href="https://instagram.com/anthony_mann/" target="_blank">anthony_mann</a> </td>
+                <td> <a href="https://snapchat.com/add/mann64/" target="_blank">mann64</a> </td>
+                <td> <a href="https://twitter.com/anthony_mann/" target="_blank">anthony_mann</a> </td>
+                <td>anthony794</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">15</th>
+                <td>Vanessa Garcia</td>
+                <td> <a href="https://instagram.com/vanessa.garcia/" target="_blank">vanessa.garcia</a> </td>
+                <td> <a href="https://snapchat.com/add/garcia55/" target="_blank">garcia55</a> </td>
+                <td> <a href="https://twitter.com/vgarcia/" target="_blank">vgarcia</a> </td>
+                <td>vanessa699</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">16</th>
+                <td>Gabriel Parker</td>
+                <td> <a href="https://instagram.com/gabriel.parker/" target="_blank">gabriel.parker</a> </td>
+                <td> <a href="https://snapchat.com/add/gabriel.parker/" target="_blank">gabriel.parker</a> </td>
+                <td> <a href="https://twitter.com/gabriel_parker/" target="_blank">gabriel_parker</a> </td>
+                <td>parker76</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">17</th>
+                <td>Alicia Rosales</td>
+                <td> <a href="https://instagram.com/rosales52/" target="_blank">rosales52</a> </td>
+                <td> <a href="https://snapchat.com/add/rosales94/" target="_blank">rosales94</a> </td>
+                <td> <a href="https://twitter.com/arosales/" target="_blank">arosales</a> </td>
+                <td>alicia_rosales</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">18</th>
+                <td>Jessica Holden</td>
+                <td> <a href="https://instagram.com/jessica.holden/" target="_blank">jessica.holden</a> </td>
+                <td> <a href="https://snapchat.com/add/jessica.holden/" target="_blank">jessica.holden</a> </td>
+                <td> <a href="https://twitter.com/holden26/" target="_blank">holden26</a> </td>
+                <td>jessicaholden</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">19</th>
+                <td>Angela Martin</td>
+                <td> <a href="https://instagram.com/angela_martin/" target="_blank">angela_martin</a> </td>
+                <td> <a href="https://snapchat.com/add/angela.martin/" target="_blank">angela.martin</a> </td>
+                <td> <a href="https://twitter.com/martin55/" target="_blank">martin55</a> </td>
+                <td>angela.martin</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">20</th>
+                <td>Stephen Willis</td>
+                <td> <a href="https://instagram.com/stephen996/" target="_blank">stephen996</a> </td>
+                <td> <a href="https://snapchat.com/add/swillis/" target="_blank">swillis</a> </td>
+                <td> <a href="https://twitter.com/stephen448/" target="_blank">stephen448</a> </td>
+                <td>stephen.willis</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">21</th>
+                <td>Linda White</td>
+                <td> <a href="https://instagram.com/linda785/" target="_blank">linda785</a> </td>
+                <td> <a href="https://snapchat.com/add/linda521/" target="_blank">linda521</a> </td>
+                <td> <a href="https://twitter.com/lindawhite/" target="_blank">lindawhite</a> </td>
+                <td>linda.white</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">22</th>
+                <td>Jose Dickerson</td>
+                <td> <a href="https://instagram.com/jose.dickerson/" target="_blank">jose.dickerson</a> </td>
+                <td> <a href="https://snapchat.com/add/jdickerson/" target="_blank">jdickerson</a> </td>
+                <td> <a href="https://twitter.com/jdickerson/" target="_blank">jdickerson</a> </td>
+                <td>jose720</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">23</th>
+                <td>Robert Morton</td>
+                <td> <a href="https://instagram.com/robert423/" target="_blank">robert423</a> </td>
+                <td> <a href="https://snapchat.com/add/robertmorton/" target="_blank">robertmorton</a> </td>
+                <td> <a href="https://twitter.com/robert_morton/" target="_blank">robert_morton</a> </td>
+                <td>rmorton</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">24</th>
+                <td>Elaine Robertson</td>
+                <td> <a href="https://instagram.com/elaine_robertson/" target="_blank">elaine_robertson</a> </td>
+                <td> <a href="https://snapchat.com/add/elainerobertson/" target="_blank">elainerobertson</a> </td>
+                <td> <a href="https://twitter.com/elaine439/" target="_blank">elaine439</a> </td>
+                <td>elaine.robertson</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">25</th>
+                <td>Shelly Hartman</td>
+                <td> <a href="https://instagram.com/shartman/" target="_blank">shartman</a> </td>
+                <td> <a href="https://snapchat.com/add/shelly_hartman/" target="_blank">shelly_hartman</a> </td>
+                <td> <a href="https://twitter.com/shartman/" target="_blank">shartman</a> </td>
+                <td>shellyhartman</td>
+            </tr>
+        
+            <tr >
+                <th scope="row">26</th>
+                <td>William Ly</td>
+                <td> <a href="https://instagram.com/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td> <a href="https://snapchat.com/add/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td> <a href="https://twitter.com/lywilliam/" target="_blank">lywilliam</a> </td>
+                <td>lywilliam</td>
+            </tr>
+        
+        </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm text-center">
+      <button class="btn btn-info custom-btn" data-toggle="modal" data-target="#groupchatModal">
+        Set Groupchat Link
+      </button>
+      <button class="btn btn-dark custom-btn" data-toggle="modal" data-target="#gc_history_modal">
+        View Groupchat Link History
+      </button> 
+      <button class="btn btn-danger custom-btn" data-toggle="modal" data-target="#removeModal">
+        Remove class
+      </button>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </main>
+    
+      <footer class="footer">
+        <div class="container text-center">
+            <hr style="height:1px;border:none;color:#D3D3D3;background-color:#D3D3D3;">
+            <h5>Supports Spring 2024</h5>
+            <p>Created by William Ly '24</p>
+            <p class="contact"><a href="../../contact/index.html">Contact Me</a> | <a href="../../privacy_policy/index.html">Privacy Policy</a></p>
+            <p><i><strong>Note</strong>: Not affiliated with UMass Amherst</i></p>
+          </div>
+        </div> 
+
+      </footer>
+    
+  </body>
+</html>
