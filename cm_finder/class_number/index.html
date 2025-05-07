@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="1090852746409-dg3iiqskigd5b11ek2cdfegbi9de4prb.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/website/css/main.css">
+    <link rel="icon" href="../static/website/images/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WD87SPQC0S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WD87SPQC0S');
+    </script> 
+    <title> What is a Class Number? </title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-umass fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="../index.html">Classmate Finder at UMass</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="../index.html">Home</a>
+                  
+                  <a class="nav-item nav-link" target="_blank" href="https://chrome.google.com/webstore/detail/class-number-exporter/mphpcmkacfbacbkiompmenmfhpemgmjk">Browser Extension</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="../accounts/settings/index.html">Settings</a>
+                    <a class="nav-item nav-link" style="cursor:pointer;" onclick="signOut();">Sign out</a>
+                    <script>
+                      function signOut() {
+                        window.location.href = "../index.html"
+                      }
+
+                      function onLoad() {
+                        gapi.load('auth2', function() {
+                          gapi.auth2.init();
+                        });
+                      }
+                    </script>
+                </div>
+              </div>
+          
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      
+      <div class="row">
+        <div class="col-md-12">
+              <div id="alert" class='alert' hidden>
+
+              </div>
+          
+<style>
+img {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    img {
+        width: 500px;
+    }
+}
+</style>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-10">
+        <h2>
+            What is a Class Number?
+        </h2>
+        <p>
+            "The Class Number is a 5-digit number used as a unique identifier for a course. All components of a class (e.g., lectures, discussions, labs, etc.) have their own Class Numbers."<sup>[<a href="https://www.umass.edu/it/spire/tooltips/class_number.html" target="_blank">Source</a>]</sup>
+        </p>
+        <h2>
+            How can I find my class's Class Number for the current term?
+        </h2>
+        <p>
+            <ol>
+                <li>Log in to <a href="https://www.spire.umass.edu/" target="_blank">SPIRE</a>.</li>
+                <li>Under "This Week's Schedule", you'll see a list of all of your classes.</li>
+                <img class="mt-1 mb-2"src="../static/website/images/class_number_1.png" alt="List of classes">
+                <li>The Class Number for each class is designated by the 5-digit number inside of the parentheses under the class column.</li>
+                <img class="mt-1" src="../static/website/images/class_number_2.png" alt="List of classes with class numbers underlined" width="500">
+                <br>
+            </ol>
+            <p>There are other places on SPIRE where you can find class numbers, such as in your class schedule or in your shopping cart. These areas may also include class numbers for future terms.</p>
+        </p>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </main>
+    
+      <footer class="footer">
+        <div class="container text-center">
+            <hr style="height:1px;border:none;color:#D3D3D3;background-color:#D3D3D3;">
+            <h5>Supports Spring 2024</h5>
+            <p>Created by William Ly '24</p>
+            <p class="contact"><a href="../contact/index.html">Contact Me</a> | <a href="../privacy_policy/index.html">Privacy Policy</a></p>
+            <p><i><strong>Note</strong>: Not affiliated with UMass Amherst</i></p>
+          </div>
+        </div> 
+
+      </footer>
+    
+  </body>
+</html>

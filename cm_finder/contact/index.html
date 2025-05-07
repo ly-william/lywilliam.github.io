@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="1090852746409-dg3iiqskigd5b11ek2cdfegbi9de4prb.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/website/css/main.css">
+    <link rel="icon" href="../static/website/images/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WD87SPQC0S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WD87SPQC0S');
+    </script> 
+    <title> Contact </title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-umass fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="../index.html">Classmate Finder at UMass</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  <a class="nav-item nav-link" href="../index.html">Home</a>
+                  
+                  <a class="nav-item nav-link" target="_blank" href="https://chrome.google.com/webstore/detail/class-number-exporter/mphpcmkacfbacbkiompmenmfhpemgmjk">Browser Extension</a>
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="../accounts/settings/index.html">Settings</a>
+                    <a class="nav-item nav-link" style="cursor:pointer;" onclick="signOut();">Sign out</a>
+                    <script>
+                      function signOut() {
+                        window.location.href = "../index.html"
+                      }
+
+                      function onLoad() {
+                        gapi.load('auth2', function() {
+                          gapi.auth2.init();
+                        });
+                      }
+                    </script>
+                </div>
+              </div>
+          
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      
+      <div class="row">
+        <div class="col-md-12">
+              <div id="alert" class='alert' hidden>
+
+              </div>
+          
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div>
+                <h2>Feedback Form</h2>
+            </div>
+            <div>If you have any questions, concerns, or suggestions, please feel free to send them to me <a target="_blank" href="https://forms.gle/7iibqY4ASqfcdQB67">here!</a></div>
+            <p>You'll need to be signed into your UMass email to fill it out.</p>
+            <div>
+                <h2>Contact Information</h2>
+            </div>
+            <p>Alternatively, you can reach out to me via...</p>
+            <div>Email: wly@umass.edu</div>
+            <div>Snapchat: notwilliamly</div>
+            <div>Instagram: ly.william02</div>
+        </div>
+    </div>
+
+        </div>
+      </div>
+    </main>
+    
+      <footer class="footer">
+        <div class="container text-center">
+            <hr style="height:1px;border:none;color:#D3D3D3;background-color:#D3D3D3;">
+            <h5>Supports Spring 2024</h5>
+            <p>Created by William Ly '24</p>
+            <p class="contact"><a href="index.html">Contact Me</a> | <a href="../privacy_policy/index.html">Privacy Policy</a></p>
+            <p><i><strong>Note</strong>: Not affiliated with UMass Amherst</i></p>
+          </div>
+        </div> 
+
+      </footer>
+    
+  </body>
+</html>

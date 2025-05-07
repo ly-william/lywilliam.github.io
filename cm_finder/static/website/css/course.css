@@ -1,0 +1,44 @@
+table {
+  table-layout: auto;
+  width: 100%;
+  white-space: nowrap;
+}
+
+img {
+  height: 20px;
+}
+
+.groupchat-snapchat {
+  height: 50px;
+  cursor: pointer;
+}
+
+.groupchat-discord {
+  height: 60px;
+  cursor: pointer;
+}
+
+.custom-btn {
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.no-underline:hover {
+  text-decoration: none;
+}
+@media only screen and (min-width: 768px) {
+  .custom-btn {
+    width: auto;
+    margin-right: 5px;
+    font-size: 16px;
+  }
+}
+
+.wrap {
+  word-wrap: break-word;
+}
+
+.clickable {
+  cursor: pointer;
+}
