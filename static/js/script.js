@@ -3,7 +3,6 @@ function openLightbox(imageSrc) {
   const lightboxImage = document.getElementById("lightboxImage");
   lightboxImage.src = imageSrc;
   lightboxModal.classList.remove("hidden");
-  console.log("runs");
 }
 
 document.getElementById("lightboxClose").addEventListener("click", () => {
